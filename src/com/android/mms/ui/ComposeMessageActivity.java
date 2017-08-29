@@ -3366,6 +3366,15 @@ public class ComposeMessageActivity extends Activity
         mIsSmsEnabled = MmsConfig.isSmsEnabled(this);
         super.onCreate(savedInstanceState);
         MmsLog.d(TAG, "onCreate() enter!!");
+
+        /// control LED: By Bright.L 2016.12.21 @{
+        Intent openLed = new Intent("com.yongyida.robot.MMS_RECEIVED");
+        openLed.putExtra("turn_on", false);
+        openLed.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        sendBroadcast(openLed);
+        Log.d(TAG, "com.yongyida.robot.MMS_RECEIVED" + ", turn_on led: " + false);
+        /// @}
+
         /// M: Code analyze 001, Plugin opeartor. @{
         initPlugin(this);
         /// @}

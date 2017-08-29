@@ -82,6 +82,14 @@ public class DefaultMmsDialogNotifyExt extends ContextWrapper implements IMmsDia
 			player.setLooping(false);
 			player.prepare();
 			player.start();
+
+            /// control LED: By Bright.L 2016.12.21 @{
+            Intent openLed = new Intent("com.yongyida.robot.MMS_RECEIVED");
+            openLed.putExtra("turn_on", true);
+            openLed.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+            context.sendBroadcast(openLed);
+            Log.d(TAG, "com.yongyida.robot.MMS_RECEIVED" + ", turn_on led: " + true);
+            /// @}
 		} catch (Exception e) {
 			Log.d(TAG, "YYD Mms error: " + e.getMessage());
 		}

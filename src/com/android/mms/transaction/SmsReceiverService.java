@@ -1157,7 +1157,6 @@ public class SmsReceiverService extends Service implements IMissedSmsReceiverHos
     }
 
     private void initPlugin(Context context) {
-
         mDisplayClassZeroPlugin = (IDisplayClassZeroMessageExt) MPlugin.createInstance(
               IDisplayClassZeroMessageExt.class.getName(),context.getApplicationContext());
         MmsLog.d(TAG, "operator mDisplayClassZeroPlugin = " + mDisplayClassZeroPlugin);
