@@ -86,7 +86,6 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.TextKeyListener;
 import android.util.AndroidException;
-import android.util.Log;
 import android.view.View.OnClickListener;
 import android.view.View;
 import android.widget.Button;
@@ -422,7 +421,7 @@ public class DialogModeActivity extends Activity implements
             setDialogView();
             resetMessage();
         }
-
+        
         registerReceiver();
         /// M: add for ipmessage, notification listener
         IpMessageUtils.addIpMsgNotificationListeners(this, this);
@@ -484,14 +483,6 @@ public class DialogModeActivity extends Activity implements
     }
     @Override
     protected void onDestroy() {
-        /// control LED: By Bright.L 2016.12.21 @{
-        Intent openLed = new Intent("com.yongyida.robot.MMS_RECEIVED");
-        openLed.putExtra("turn_on", false);
-        openLed.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-        sendBroadcast(openLed);
-        Log.d(TAG, "com.yongyida.robot.MMS_RECEIVED" + ", turn_on led: " + false);
-        /// @}
-
         MmsLog.d(TAG, "DialogModeActivity.onDestroy");
         if (mCursor != null) {
             mCursor.close();
@@ -1290,7 +1281,7 @@ public class DialogModeActivity extends Activity implements
 		intent.setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
 		sendBroadcast(intent);
 	}
-
+	
     // Implements OnClickListener
     public void onClick(View v) {
         MmsLog.d(TAG, "DialogModeActivity.onClick");
@@ -1308,7 +1299,7 @@ public class DialogModeActivity extends Activity implements
             }
             markAsRead(mReadedUris);
             /// M: see this variable's note
-            mNeedFinish = true;
+            mNeedFinish = true;			
         } else if (v.equals(mSendButton)) {
             MmsLog.d(TAG, "Send SMS");
             sendReplySms();
@@ -1322,7 +1313,7 @@ public class DialogModeActivity extends Activity implements
             if (mCurUri != null && !mReadedUris.contains(mCurUri)) {
                 MmsLog.d(TAG, "mCurUri" + mCurUri.toString());
                 mReadedUris.add(mCurUri);
-            }
+            }			
             finish();
         } else if (v == mDeleteBtn) {
             // change the delete button to view button.
@@ -1572,7 +1563,7 @@ public class DialogModeActivity extends Activity implements
         MmsLog.d(TAG,"CellConnMgr, state is " + state);
         if (((state & CellConnMgr.STATE_FLIGHT_MODE) == CellConnMgr.STATE_FLIGHT_MODE ) ||
             ((state & CellConnMgr.STATE_RADIO_OFF) == CellConnMgr.STATE_RADIO_OFF ) ||
-            ((state & (CellConnMgr.STATE_FLIGHT_MODE | CellConnMgr.STATE_RADIO_OFF))
+            ((state & (CellConnMgr.STATE_FLIGHT_MODE | CellConnMgr.STATE_RADIO_OFF))  
                   == (CellConnMgr.STATE_FLIGHT_MODE | CellConnMgr.STATE_RADIO_OFF)))  {
             final ArrayList<String> stringArray = cellConnMgr.getStringUsingState(mSelectedSubId,
                     state);
@@ -2356,7 +2347,7 @@ public class DialogModeActivity extends Activity implements
                 values.put("read", 1);
                 values.put("seen", 1);
                 SqliteWrapper.update(getApplicationContext(), getContentResolver(), uri, values,
-                    null, null);
+                    null, null);           
                 MessagingNotification.blockingUpdateNewMessageIndicator(DialogModeActivity.this,
                         MessagingNotification.THREAD_NONE, false,uri);
             }

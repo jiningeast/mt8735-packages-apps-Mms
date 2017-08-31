@@ -335,14 +335,6 @@ public class ConversationList extends ListActivity implements DraftCache.OnDraft
         }
         /// @}
 
-        /// control LED: By Bright.L 2016.12.21 @{
-        Intent openLed = new Intent("com.yongyida.robot.MMS_RECEIVED");
-        openLed.putExtra("turn_on", false);
-        openLed.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-        sendBroadcast(openLed);
-        Log.d(TAG, "com.yongyida.robot.MMS_RECEIVED" + ", turn_on led: " + false);
-        /// @}
-
         setContentView(R.layout.conversation_list_screen);
         mSmsPromoBannerView = findViewById(R.id.banner_sms_promo);
         /// M: Code analyze 002, For new feature ALPS00041233, msim enhancment check in . @{
