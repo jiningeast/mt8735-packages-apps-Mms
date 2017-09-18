@@ -1276,12 +1276,6 @@ public class DialogModeActivity extends Activity implements
         return conv;
     }
 
-	void sendYYDBroadcast() {
-		Intent intent = new Intent("com.yydrobot.sms.DIALOG_READ");
-		intent.setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-		sendBroadcast(intent);
-	}
-	
     // Implements OnClickListener
     public void onClick(View v) {
         MmsLog.d(TAG, "DialogModeActivity.onClick");
@@ -1299,7 +1293,7 @@ public class DialogModeActivity extends Activity implements
             }
             markAsRead(mReadedUris);
             /// M: see this variable's note
-            mNeedFinish = true;			
+            mNeedFinish = true;
         } else if (v.equals(mSendButton)) {
             MmsLog.d(TAG, "Send SMS");
             sendReplySms();
@@ -1313,7 +1307,7 @@ public class DialogModeActivity extends Activity implements
             if (mCurUri != null && !mReadedUris.contains(mCurUri)) {
                 MmsLog.d(TAG, "mCurUri" + mCurUri.toString());
                 mReadedUris.add(mCurUri);
-            }			
+            }
             finish();
         } else if (v == mDeleteBtn) {
             // change the delete button to view button.
@@ -1351,8 +1345,6 @@ public class DialogModeActivity extends Activity implements
                     | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(clickIntent);
         }
-		/// By Bright.L 2016.7.5
-		sendYYDBroadcast();
     }
 
     private void openThread(long threadId) {

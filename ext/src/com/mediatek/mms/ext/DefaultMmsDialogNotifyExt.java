@@ -65,27 +65,26 @@ public class DefaultMmsDialogNotifyExt extends ContextWrapper implements IMmsDia
         Context context = this;
 
 //        if (isHome(context)) {
-		if (!isMms(context)) {	// By Bright.L 2016.06.24
-			Log.d(TAG, "Pop a dialog");
+            Log.d(TAG, "Pop a dialog");
             Intent smsIntent = new Intent("com.android.mms.dialogmode.NEWMSGNOTIFY");
 
             smsIntent.putExtra("com.android.mms.transaction.new_msg_uri", msgUri.toString());
             smsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             context.startActivity(smsIntent);
-		}
-		Log.d(TAG, "Play a Ringtone.");
-		try {
-			Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-			MediaPlayer player = new MediaPlayer();
-			player.setDataSource(context, uri);
-			player.setLooping(false);
-			player.prepare();
-			player.start();
-		} catch (Exception e) {
-			Log.d(TAG, "YYD Mms error: " + e.getMessage());
-		}
-		
+			
+			Log.d(TAG, "Play a Ringtone.");
+            try {
+            	Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                MediaPlayer player = new MediaPlayer();
+                player.setDataSource(context, uri);
+                player.setLooping(false);
+                player.prepare();
+                player.start();
+            } catch (Exception e) {
+            	Log.d(TAG, "YYD Mms error: " + e.getMessage());
+            }
+			
 //        } else {
 //            Log.d(TAG, "not at launcher");
 //        }
@@ -162,22 +161,4 @@ public class DefaultMmsDialogNotifyExt extends ContextWrapper implements IMmsDia
         return true;
     }
     /// @}
-	
-	// By Bright.L 2016.06.24
-	public boolean isMms(Context context) {
-		String packageName;
-        String className;
-		
-		ActivityManager activityManager = (ActivityManager) context
-                .getSystemService(Context.ACTIVITY_SERVICE);
-        List<RunningTaskInfo> rti = activityManager.getRunningTasks(2);
-
-        packageName = rti.get(0).topActivity.getPackageName();
-        className = rti.get(0).topActivity.getClassName();
-		if ("com.android.mms".equals(packageName) || "com.android.mms.ui.ConversationList".equals(className)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 }
